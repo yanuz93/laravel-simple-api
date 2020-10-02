@@ -78,9 +78,9 @@ This project was created and prvided as solution to the engineering test in Mile
 
 - `GET /package/{id}`
     - Request
-        params: As this is a very simple API, any params will not be processed by our application
+        - params: As this is a very simple API, any params will not be processed by our application
     - Response
-        You'll get the package if it is exists in the database with 200 response status or 4xx status if the package isn't exists.
+        - You'll get the package if it is exists in the database with 200 response status or 4xx status if the package isn't exists.
 
 - `PUT /package/{id}`
     - Request
@@ -145,7 +145,7 @@ This project was created and prvided as solution to the engineering test in Mile
 
 - `DELETE /package/{id}`
     - Request
-        No params or body needed.
+        - No params or body needed.
     - Response
         - If you're against the validation rules, an error message will be shown with 4xx status if the package isn't exists.
         - If no packages with the specified ids found, you'll get the failed response with 4xx response status
