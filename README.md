@@ -42,13 +42,13 @@ This project was created and prvided as solution to the engineering test in Mile
 ## API Endpoints
 - `GET /package`
     - Request
-        params: As this is a very simple API, any params will not be processed by our application
+        - params: As this is a very simple API, any params will not be processed by our application
     - Response
-        You will see a list of packages or an empty list if you have no packages saved in the database.
+        - You will see a list of packages or an empty list if you have no packages saved in the database.
 
 - `POST /package`
     - Request
-        body: 
+        - body: 
         ```json
             "location_id" : ["required"],
             "connote_id" : ["required", "exists:connotes,_id"],
@@ -84,7 +84,7 @@ This project was created and prvided as solution to the engineering test in Mile
 
 - `PUT /package/{id}`
     - Request
-        body: 
+        - body: 
         ```json
             "location_id" : ["required"],
             "connote_id" : ["required", "exists:connotes,_id"],
@@ -114,7 +114,7 @@ This project was created and prvided as solution to the engineering test in Mile
 
 - `PATCH /package/{id}`
     - Request
-        body: 
+        - body: 
         ```json
             "location_id" : ["sometimes"],
             "connote_id" : ["sometimes", "exists:connotes,_id"],
@@ -150,5 +150,13 @@ This project was created and prvided as solution to the engineering test in Mile
         - If you're against the validation rules, an error message will be shown with 4xx status if the package isn't exists.
         - If no packages with the specified ids found, you'll get the failed response with 4xx response status
         - You'll get the recently updated package if it is exists in the database
+
+- `POST /connote`
+    - Request
+        - body: As it was not required in the test but needed for a valid POST, PUT or PATCH (with specified connote_id) request, any json data will be accepted.
+
+    - Response
+        - You'll get the recently saved connote with 200 response status.
+
 
 Each request above needs to have "Accept: application/json" header.
