@@ -24,20 +24,24 @@ class StorePackage extends FormRequest
     public function rules()
     {
         return [
-            'destination_data' => ['required'],
-            'origin_data' => ['required'],
+            "location_id" => ['required'],
+            "connote_id" => ['required', 'exists:connotes,_id'],
+            "organization_id" => ['required', 'numeric'],
             "transaction_id" => ['required'],
             "customer_name" => ['required'],
             "customer_code" => ['required', 'numeric'],
             "transaction_amount" => ['required', 'numeric'],
+            "transaction_discount" => ['sometimes', 'numeric'],
+            "transaction_additional_field" => ['sometimes'],
             "transaction_payment_type" => ['required', 'numeric'],
             "transaction_state" => ['required'],
             "transaction_code" => ['required'],
             "transaction_order" => ['required', 'numeric'],
-            "location_id" => ['required'],
-            "connote_id" => ['required', 'exists:connotes,_id'],
-            "organization_id" => ['required', 'numeric'],
+            "transaction_cash_amount" => ['required', 'numeric'],
+            "transaction_cash_change" => ['required', 'numeric'],
             "transaction_payment_type_name" => ['required'],
+            'destination_data' => ['required'],
+            'origin_data' => ['required'],
         ];
     }
 }
