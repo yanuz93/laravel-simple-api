@@ -1,61 +1,154 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+## About This Project
+This project was created and prvided as solution to the engineering test in MileApp.
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+## Quick Start Guide
+- First, you need to clone this repository using https 
+    ```
+    git clone https://github.com/yanuz93/laravel-simple-api.git
+    ```
 
-## About Laravel
+    or you can use GitHub CLI
+    ```
+    gh repo clone yanuz93/laravel-simple-api
+    ```
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Next, you need to install all dependencies using PHP Composer. If you haven't installed it before, please read and follow the instruction given in their [official page](https://getcomposer.org). Then, install the dependencies using the command below
+    ```
+    composer install
+    ```
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- Setup your apps environment and testing environment in .env and .env.testing respectively.
+    1. Copy the entire environment from .env.example file
+        ```
+        cp .env.example .env .env.testing
+        ```
+    2. Change the environment variables below to match your local and testing database configuration.
+        ```
+        DB_CONNECTION=mongodb
+        DB_HOST=localhost
+        DB_PORT=27017
+        DB_DATABASE=
+        DB_USERNAME=
+        DB_PASSWORD=
+        ```
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- Run your application with [Nginx](https://nginx.com), [Apache](https://apache.org), or any other web server and even using [PHP](https:/php.net) default server using this command.
+    ```
+    php -S {hostname}:{port} server.php
+    ```
 
-## Learning Laravel
+- Now, you can access the API in `http://{hostname}:{port}/api`
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## API Endpoints
+- `GET /package`
+    - Request
+        params: As this is a very simple API, any params will not be processed by our application
+    - Response
+        You will see a list of packages or an empty list if you have no packages saved in the database.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- `POST /package`
+    - Request
+        body: 
+        ```json
+            "location_id" : ["required"],
+            "connote_id" : ["required", "exists:connotes,_id"],
+            "organization_id" : ["required", "numeric"],
+            "transaction_id" : ["required"],
+            "customer_name" : ["required"],
+            "customer_code" : ["required", "numeric"],
+            "transaction_amount" : ["required", "numeric"],
+            "transaction_discount" : ["sometimes", "numeric"],
+            "transaction_additional_field" : ["sometimes"],
+            "transaction_payment_type" : ["required", "numeric"],
+            "transaction_state" : ["required"],
+            "transaction_code" : ["required"],
+            "transaction_order" : ["required", "numeric"],
+            "transaction_cash_amount" : ["required", "numeric"],
+            "transaction_cash_change" : ["required", "numeric"],
+            "transaction_payment_type_name" : ["required"],
+            "destination_data" : ["required"],
+            "origin_data" : ["required"],
 
-## Laravel Sponsors
+        ```
+        You can read the validation details in [Laravel's Validation Documentaion](https://laravel.com/docs/8.x/validation#available-validation-rules)
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+    - Response
+        - You'll get the recently saved package with 200 response status
+        - If you're against the validation rules, an error message  will be shown with 4xx status if the package isn't exists.
 
-### Premium Partners
+- `GET /package/{id}`
+    - Request
+        params: As this is a very simple API, any params will not be processed by our application
+    - Response
+        You'll get the package if it is exists in the database with 200 response status or 4xx status if the package isn't exists.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[OP.GG](https://op.gg)**
+- `PUT /package/{id}`
+    - Request
+        body: 
+        ```json
+            "location_id" : ["required"],
+            "connote_id" : ["required", "exists:connotes,_id"],
+            "organization_id" : ["required", "numeric"],
+            "transaction_id" : ["required"],
+            "customer_name" : ["required"],
+            "customer_code" : ["required", "numeric"],
+            "transaction_amount" : ["required", "numeric"],
+            "transaction_discount" : ["sometimes", "numeric"],
+            "transaction_additional_field" : ["sometimes"],
+            "transaction_payment_type" : ["required", "numeric"],
+            "transaction_state" : ["required"],
+            "transaction_code" : ["required"],
+            "transaction_order" : ["required", "numeric"],
+            "transaction_cash_amount" : ["required", "numeric"],
+            "transaction_cash_change" : ["required", "numeric"],
+            "transaction_payment_type_name" : ["required"],
+            "destination_data" : ["required"],
+            "origin_data" : ["required"],
 
-## Contributing
+        ```
+        You can read the validation details in [Laravel's Validation Documentaion](https://laravel.com/docs/8.x/validation#available-validation-rules)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+    - Response
+        - You'll get the recently updated package if it is exists in the database or the recently saved package if it's not existed before with 200 response status
+        - If you're against the validation rules, an error message  will be shown with 4xx status if the package isn't exists.
 
-## Code of Conduct
+- `PATCH /package/{id}`
+    - Request
+        body: 
+        ```json
+            "location_id" : ["sometimes"],
+            "connote_id" : ["sometimes", "exists:connotes,_id"],
+            "organization_id" : ["sometimes", "numeric"],
+            "transaction_id" : ["sometimes"],
+            "customer_name" : ["sometimes"],
+            "customer_code" : ["sometimes", "numeric"],
+            "transaction_amount" : ["sometimes", "numeric"],
+            "transaction_discount" : ["sometimes", "numeric"],
+            "transaction_additional_field" : ["sometimes"],
+            "transaction_payment_type" : ["sometimes", "numeric"],
+            "transaction_state" : ["sometimes"],
+            "transaction_code" : ["sometimes"],
+            "transaction_order" : ["sometimes", "numeric"],
+            "transaction_cash_amount" : ["sometimes", "numeric"],
+            "transaction_cash_change" : ["sometimes", "numeric"],
+            "transaction_payment_type_name" : ["sometimes"],
+            "destination_data" : ["sometimes"],
+            "origin_data" : ["sometimes"],
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+        ```
+        You can read the validation details in [Laravel's Validation Documentaion](https://laravel.com/docs/8.x/validation#available-validation-rules)
 
-## Security Vulnerabilities
+    - Response
+        - If you're against the validation rules, an error message will be shown with 4xx status if the package isn't exists.
+        - You'll get the recently updated package if it is exists in the database
+        - If no packages with the specified ids found, you'll get the failed response with 4xx response status
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+- `DELETE /package/{id}`
+    - Request
+        No params or body needed.
+    - Response
+        - If you're against the validation rules, an error message will be shown with 4xx status if the package isn't exists.
+        - If no packages with the specified ids found, you'll get the failed response with 4xx response status
+        - You'll get the recently updated package if it is exists in the database
 
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Each request above needs to have "Accept: application/json" header.
